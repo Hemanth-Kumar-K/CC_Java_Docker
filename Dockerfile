@@ -1,14 +1,27 @@
-# Use an official OpenJDK runtime as a parent image
-FROM openjdk:8-jre
+# Use the official Maven image to build the application
+# This image contains Maven and OpenJDK 11
+FROM maven:3.8.6-openjdk-11 AS build
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the JAR file into the container at /app
-COPY target/CC_Exercise-0.0.1-SNAPSHOT.jar /app/
+# Copy the pom.xml and install dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-# Make port 8080 available to the world outside this container
-EXPOSE 5000
+# Copy the source code and compile the application
+COPY src /app/src
+RUN mvn package -DskipTests
 
-# Run the application
-ENTRYPOINT ["java", "-jar", "CC_Exercise-0.0.1-SNAPSHOT.jar"]
+# Use a smaller base image to run the application
+# This image contains only the OpenJDK runtime
+FROM openjdk:11-jre-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the jar file from the build stage
+COPY --from=build /app/target/your-app-name.jar /app/your-app-name.jar
+
+# Run the jar file
+ENTRYPOINT ["java", "-jar", "/app/your-app-name.jar"]
