@@ -21,7 +21,7 @@ FROM openjdk:11-jre-slim
 WORKDIR /app
 
 # Copy the jar file from the build stage
-COPY --from=build /app/target/your-app-name.jar /app/your-app-name.jar
+COPY --from=build /app/target/CC_Java_Docker.jar /app/CC_Java_Docker.jar
 
 # Run the jar file
-ENTRYPOINT ["java", "-jar", "/app/your-app-name.jar"]
+ENTRYPOINT ["java", "-jar", "/app/CC_Java_Docker.jar"]
