@@ -1,5 +1,5 @@
 # Use an official Maven image to build the project
-FROM maven:3.8.8-openjdk-17 AS build
+FROM maven:3.8.8-eclipse-temurin-17 AS build
 
 # Set the working directory in the container
 WORKDIR /app
@@ -11,7 +11,7 @@ COPY . .
 RUN mvn clean package
 
 # Use an official OpenJDK runtime as a parent image for the runtime container
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk
 
 # Set the working directory in the container
 WORKDIR /app
