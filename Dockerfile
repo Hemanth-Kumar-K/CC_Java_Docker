@@ -19,4 +19,4 @@ WORKDIR /app
 # Copy the JAR file from the build stage
 COPY --from=build /target/CC_Exercise-0.0.1-SNAPSHOT.jar /target/CC_Exercise-0.0.1-SNAPSHOT.jar
 # Run the application
-CMD ["java", "-jar", "/app/your-artifact-id.jar"]
+CMD ["java", "-jar", "/target/CC_Exercise-0.0.1-SNAPSHOT.jar"]
